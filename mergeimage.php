@@ -1,7 +1,6 @@
 <?php
 
 function generateFinalImage($config) {
-    //test
     if (isset($config['hd_image_url']) && filter_var($config['hd_image_url'], FILTER_VALIDATE_URL)) {
         $imageData = file_get_contents($config['hd_image_url']);
         //echo '----' . __LINE__ . '----' . __FILE__ . $imageData;
