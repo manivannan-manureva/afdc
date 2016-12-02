@@ -13,7 +13,8 @@ function generateFinalImage($config) {
         $transparentcolour = imagecolorallocate($im, 255, 255, 255);
         imagecolortransparent($im, $transparentcolour);
         //$size = min(imagesx($im), imagesy($im));
-        //$size = 200;
+        
+        
         /* Start : Crop Image */
         $im = imagecrop($im, ['x' => $config['crop_x'], 'y' => $config['crop_y'], 'width' => $config['width'], 'height' => $config['height']]);
         /* Stop : Crop Image */
@@ -21,19 +22,20 @@ function generateFinalImage($config) {
         /* Start : Rotate Image */
         $im = imagerotate($im, $config['rotate_degree'], 0);
         /* Stop : Rotate Image */
-
+        
+        /* Start : Flip Image (Mirror effect) */
         if ($config['mirror_effect']) {
-            /* Start : Flip Image (Mirror effect) */
             imageflip($im, IMG_FLIP_HORIZONTAL);
-            /* Stop : Flip Image (Mirror effect) */
         }
-
+        /* Stop : Flip Image (Mirror effect) */
+        
+        /* Start : Merge Stripe */
         if (isset($config['stripe_filename']) && trim($config['stripe_filename']) != '') {
-            /* Start : Merge Stripe */
+            
             $sim = imagecreatefrompng($config['stripe_filename']);
             imagecopyresampled($im, $sim, $config['crop_x'], $config['crop_y'], 0, 0, $config['width'], $config['height'], $config['width'], $config['height']);
-            /* Stop : Merge Stripe */
         }
+        /* Stop : Merge Stripe */
 
         //generate final output image
         if ($im !== FALSE) {
@@ -52,8 +54,8 @@ $options = array();
 $options['hd_image_url'] = 'https://s-media-cache-ak0.pinimg.com/originals/32/11/13/32111359bc45a65b510d52506941f54d.jpg';
 $options['crop_x'] = 0;
 $options['crop_y'] = 0;
-$options['width'] = 500;
-$options['height'] = 500;
+$options['width'] = 300;
+$options['height'] = 300;
 $options['rotate_degree'] = 90;
 $options['mirror_effect'] = TRUE;
 $options['stripe_filename'] = 'stripe.png';
